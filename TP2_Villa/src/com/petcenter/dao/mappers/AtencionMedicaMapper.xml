@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- GIANMARCO MALEX TRILLO -->
+<mapper namespace="com.petcenter.dao.spec.AtencionMedicaMapper">
+
+  <select id="listaExamenes" resultType="Examen">
+    SELECT idEXAM as id,
+    		descripcion
+	FROM tb_examenes
+	WHERE estado=1
+  </select>
+  
+  <select id="listaDiagnostico" resultType="Diagnostico">
+    SELECT idDIAG as id,
+    		descripcion
+	FROM tb_diagnostico
+	WHERE estado=1
+  </select>
+  
+  <select id="listaAM" parameterType="java.util.HashMap" resultType="AtencionMedica">
+    SELECT AM.*, concat(nomCliente,' ',apePaternoCliente,' ',apeMaternoCliente) as 'datosCliente', nomMascota as 'datosMascota'
+	FROM tb_atencion_medica AM INNER JOIN tb_historia_clinica HC
+			ON AM.IDHC=HC.IDHC INNER JOIN tb_mascota MA
+	        ON HC.IDMASCOTA=MA.IDMASCOTA INNER JOIN tb_cliente CLI
+	        ON MA.IDCLIENTE=CLI.IDCLIENTE
+	WHERE AM.ESTADOAM=1
+	<if test="idHC != ''">
+		AND AM.idHC=#{idHC}
+	</if>	  	
+	<if test="idAM != ''">
+	   	AND AM.idAM=#{idAM}
+	</if>	  	
+	<if test="nroDocumento != ''">
+	   	AND CLI.nroDocumento=#{nroDocumento}
+	</if>
+  </select>  
+  
+</mapper>

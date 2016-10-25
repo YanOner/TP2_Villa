@@ -1,0 +1,38 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<footer>
+    <div class="container">
+        <div class="row well">
+            <div align="center">
+           	 <p><spring:message code="footer.msj.global"/></p>
+        	</div>
+   		</div>
+   		<div id="dialog-message" title="Alerta" style="display: none;">
+		  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span><span id="spnMessage"></span></p>
+		</div>
+    </div>
+</footer>
+<script type="text/javascript">
+$(function() {
+	
+    $('#dialog-message').dialog({
+      autoOpen: false,
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      buttons: {
+        "Aceptar": function() {
+        	$(this).dialog('close');
+        }
+      }
+    });
+  
+    var msg = '${mensaje}';
+	if(msg){
+		mensajeModal(msg);
+	}
+    
+  });
+</script>
+</body>
+</html>

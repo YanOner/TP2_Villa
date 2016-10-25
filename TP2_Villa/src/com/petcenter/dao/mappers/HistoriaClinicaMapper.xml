@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- GIANMARCO MALEX TRILLO -->
+<mapper namespace="com.petcenter.dao.spec.HistoriaClinicaMapper">
+
+  <select id="listaClienteMascota" parameterType="java.util.HashMap" resultType="DatosClienteMascota">
+    SELECT cli.idCliente as 'idCliente', concat(nomCliente,' ',apePaternoCliente,' ',apeMaternoCliente) as 'datosCliente',
+		ma.idMascota,nomMascota as 'datosMascota', fotoMascota,
+        ra.descripcionRaza, esp.descripcionEspecie, genma.descripcionGenMascota,
+        hc.idHC
+	FROM tb_cliente cli left join tb_mascota ma
+		on cli.idCliente=ma.idCliente and ma.estadoMascota=1 left join tb_raza ra
+        on ma.idRaza=ra.idRaza left join tb_especie esp
+        on ra.idEspecie=esp.idEspecie left join tb_generomascota genma
+        on ma.idGeneroMascota=genma.idGeneroMascota left join tb_historia_clinica hc
+        on ma.idMascota=hc.idMascota
+	WHERE cli.estadoCliente=1
+		and hc.estadoHC=1
+		and cli.idTipoDocumento=#{tipoDoc}
+        and cli.nroDocumento=#{numDoc}
+  </select>
+  
+  <insert id="registrarHC" parameterType="HistoriaClinica" useGeneratedKeys="true" keyProperty="idHC" keyColumn="idHC">
+    INSERT INTO tb_historia_clinica
+		(idCliente,
+		idMascota,
+		edad,
+		observaciones,
+		registrado)
+	VALUES
+		(#{idCliente},
+		#{idMascota},
+		#{edad},
+		#{observaciones},
+		SYSDATE())
+  </insert>
+  
+  <select id="listaHC" parameterType="java.util.HashMap" resultType="HistoriaClinica">
+    SELECT 
+	idHC,
+    nomCliente as 'datosCliente',
+    nomMascota as 'datosMascota',
+    registrado,
+    actualizado
+	FROM tb_historia_clinica hc inner join tb_cliente cli
+		 on hc.idCliente=cli.idCliente inner join tb_mascota mas
+	     on hc.idMascota=mas.idMascota
+	WHERE estadoHC=1
+		AND estadoCliente=1
+	    AND estadoMascota=1
+		<if test="idHC != ''">
+	    	AND idHC=#{idHC}
+	  	</if>	  	
+		<if test="numDOC != ''">
+	    	AND cli.nroDocumento=#{numDOC}
+	  	</if>
+  </select>
+  
+  <select id="verHC" parameterType="int" resultType="DatosClienteMascota">
+    SELECT hc.idHC, td.descripcionTipoDocumento as descDoc, cli.nroDocumento as numDoc, concat(nomCliente,' ',apePaternoCliente,' ',apeMaternoCliente) as 'datosCliente',
+		nomMascota as 'datosMascota', fotoMascota,
+        ra.descripcionRaza, esp.descripcionEspecie, genma.descripcionGenMascota,
+        hc.edad as edad, hc.observaciones
+	FROM tb_historia_clinica hc inner join tb_cliente cli 
+		on hc.idCliente=cli.idCliente inner join tb_tipodocumento td
+        on cli.idTipoDocumento=td.idTipoDocumento inner join tb_mascota ma
+		on hc.idMascota=ma.idMascota inner join tb_raza ra
+        on ma.idRaza=ra.idRaza inner join tb_especie esp
+        on ra.idEspecie=esp.idEspecie inner join tb_generomascota genma
+        on ma.idGeneroMascota=genma.idGeneroMascota
+	WHERE hc.idHC=#{idHC}
+  </select>
+  
+  <update id="eliminarHC" parameterType="int">
+  	UPDATE tb_historia_clinica
+  	SET estadoHC=0,
+  		actualizado=SYSDATE()
+  	WHERE idHC=#{idHC}
+  </update>
+  
+</mapper>

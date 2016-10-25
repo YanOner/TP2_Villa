@@ -1,0 +1,24 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title><spring:message code="header.msj.title"/></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/TP2_Villa/static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/TP2_Villa/static/css/jquery-ui.min.css">
+  <script src="/TP2_Villa/static/js/jquery-1.10.2.min.js"></script>
+  <script src="/TP2_Villa/static/js/jquery-ui.min.js"></script>
+  <script src="/TP2_Villa/static/js/bootstrap.min.js"></script>
+  <script src="/TP2_Villa/static/js/common.js"></script>
+  <script type="text/javascript" src="/TP2_Villa/static/js/bootstrap-datepicker.js"></script>
+  <link rel="stylesheet" href="/TP2_Villa/static/css/datepicker.css"/>
+  <link rel="stylesheet" href="/TP2_Villa/static/css/font-awesome.min.css" />  
+  <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+</head>
+	<img src="/TP2_Villa/static/img/logo-petcenter.png" width="240" height="140"> 
+<body>
+
+<%@ include file="navigationbar.jspf"%>

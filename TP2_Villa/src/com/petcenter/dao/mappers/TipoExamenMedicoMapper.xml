@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.petcenter.dao.spec.TipoExamenMedicoMapper">
+
+  <select id="buscarTiposExamen" resultType="TipoExamenDTO">
+		select t.idTipoExamenMedico ,t.codigoTipoExamen,t.nombreTipoExamen,t.descripcionExamen,e.nombreEspecialidad,t.idEspecialidad
+		from tipoExamenmedico t,especialidad e
+		where t.idEspecialidad = e.idEspecialidad
+		and t.nombreTipoExamen like '%${nom}%' and t.descripcionExamen like '%${desc}%' and (t.idEstado = #{est} or 0= #{est})and (t.idEspecialidad = #{esp} or 0=#{esp})
+  </select>
+  
+</mapper>
