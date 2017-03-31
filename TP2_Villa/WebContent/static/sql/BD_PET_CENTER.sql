@@ -18,182 +18,348 @@ USE `bd_petcenter`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `atributosanalisis`
+-- Table structure for table `tb_estado`
 --
 
-DROP TABLE IF EXISTS `atributosanalisis`;
+DROP TABLE IF EXISTS `tb_estado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `atributosanalisis` (
-  `codigoAtributo` varchar(45) NOT NULL,
-  `nombreAtributo` varchar(45) DEFAULT NULL,
-  `descripcionAtributo` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`codigoAtributo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `atributosanalisis`
---
-
-LOCK TABLES `atributosanalisis` WRITE;
-/*!40000 ALTER TABLE `atributosanalisis` DISABLE KEYS */;
-/*!40000 ALTER TABLE `atributosanalisis` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `colegiado`
---
-
-DROP TABLE IF EXISTS `colegiado`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `colegiado` (
-  `numeroColegiatura` varchar(45) NOT NULL,
-  `nombre` varchar(45) DEFAULT NULL,
-  `apellidoPaterno` varchar(45) DEFAULT NULL,
-  `apellidoMaterno` varchar(45) DEFAULT NULL,
-  `fechaColegiatura` date DEFAULT NULL,
-  `idEstado` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`numeroColegiatura`),
-  KEY `idEstado_idx` (`idEstado`),
-  CONSTRAINT `idEstado` FOREIGN KEY (`idEstado`) REFERENCES `estado` (`idEstado`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `colegiado`
---
-
-LOCK TABLES `colegiado` WRITE;
-/*!40000 ALTER TABLE `colegiado` DISABLE KEYS */;
-/*!40000 ALTER TABLE `colegiado` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `especialidad`
---
-
-DROP TABLE IF EXISTS `especialidad`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `especialidad` (
-  `idEspecialidad` varchar(45) NOT NULL,
-  `codigoEspecialidad` varchar(45) DEFAULT NULL,
-  `nombreEspecialidad` varchar(45) DEFAULT NULL,
-  `descripcionEspecialidad` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idEspecialidad`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `especialidad`
---
-
-LOCK TABLES `especialidad` WRITE;
-/*!40000 ALTER TABLE `especialidad` DISABLE KEYS */;
-/*!40000 ALTER TABLE `especialidad` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `estado`
---
-
-DROP TABLE IF EXISTS `estado`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `estado` (
-  `idEstado` varchar(45) NOT NULL,
-  `codigoEstado` varchar(45) DEFAULT NULL,
+CREATE TABLE `tb_estado` (
+  `idEstado` char(3) NOT NULL,
   `nombreEstado` varchar(45) DEFAULT NULL,
-  `descripcionEstado` varchar(45) DEFAULT NULL,
+  `descripcionEstado` varchar(100) DEFAULT NULL,
+  `indMante` char(1) DEFAULT NULL,
   PRIMARY KEY (`idEstado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `estado`
+-- Dumping data for table `tb_estado`
 --
 
-LOCK TABLES `estado` WRITE;
-/*!40000 ALTER TABLE `estado` DISABLE KEYS */;
-/*!40000 ALTER TABLE `estado` ENABLE KEYS */;
+LOCK TABLES `tb_estado` WRITE;
+/*!40000 ALTER TABLE `tb_estado` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_estado` ENABLE KEYS */;
+UNLOCK TABLES;
+--
+-- Table structure for table `tb_atributos`
+--
+
+DROP TABLE IF EXISTS `tb_atributos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_atributos` (
+  `idAtributo` char(10) NOT NULL,
+  `nombreAtributo` varchar(45) DEFAULT NULL,
+  `descripcionAtributo` varchar(100 DEFAULT NULL,
+  `idCaracteristica` char(10) NOT NULL,
+  `idEstado` char(3) NOT NULL,
+  PRIMARY KEY (`idAtributo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_atributos`
+--
+
+LOCK TABLES `tb_atributos` WRITE;
+/*!40000 ALTER TABLE `tb_atributos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_atributos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `estandares`
+-- Table structure for table `tb_colegiado`
 --
 
-DROP TABLE IF EXISTS `estandares`;
+DROP TABLE IF EXISTS `tb_colegiado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `estandares` (
-  `codigoEstandar` varchar(45) NOT NULL,
+CREATE TABLE `tb_colegiado` (
+  `numeroColegiatura` char(40) NOT NULL,
+  `nombre` varchar(45) DEFAULT NULL,
+  `apellidoPaterno` varchar(45) DEFAULT NULL,
+  `apellidoMaterno` varchar(45) DEFAULT NULL,
+  `fechaColegiatura` date DEFAULT NULL,
+  `idEstado` char(3) DEFAULT NULL,
+  PRIMARY KEY (`numeroColegiatura`),
+  KEY `idEstado_idx` (`idEstado`),
+  CONSTRAINT `idEstado` FOREIGN KEY (`idEstado`) REFERENCES `tb_estado` (`idEstado`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_colegiado`
+--
+
+LOCK TABLES `tb_colegiado` WRITE;
+/*!40000 ALTER TABLE `tb_colegiado` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_colegiado` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_especialidad`
+--
+
+DROP TABLE IF EXISTS `tb_especialidad`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_especialidad` (
+  `idEspecialidad` char(10) NOT NULL,
+  `nombreEspecialidad` varchar(45) DEFAULT NULL,
+  `descripcionEspecialidad` varchar(100) DEFAULT NULL,
+  `idEstado` char(3) NOT NULL,
+  PRIMARY KEY (`idEspecialidad`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_especialidad`
+--
+
+LOCK TABLES `tb_especialidad` WRITE;
+/*!40000 ALTER TABLE `tb_especialidad` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_especialidad` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+--
+-- Table structure for table `tb_estandares`
+--
+
+DROP TABLE IF EXISTS `tb_estandares`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_estandares` (
+  `idEstandar` char(10) NOT NULL,
   `nombreEstandar` varchar(45) DEFAULT NULL,
-  `descripcionEstandar` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`codigoEstandar`)
+  `descripcionEstandar` varchar(100) DEFAULT NULL,
+  `idEstado` char(3) NOT NULL,
+  PRIMARY KEY (`idEstandar`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `estandares`
+-- Dumping data for table `tb_estandares`
 --
 
-LOCK TABLES `estandares` WRITE;
-/*!40000 ALTER TABLE `estandares` DISABLE KEYS */;
-/*!40000 ALTER TABLE `estandares` ENABLE KEYS */;
+LOCK TABLES `tb_estandares` WRITE;
+/*!40000 ALTER TABLE `tb_estandares` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_estandares` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `normativas`
+-- Table structure for table `tb_normativas`
 --
 
-DROP TABLE IF EXISTS `normativas`;
+DROP TABLE IF EXISTS `tb_normativas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `normativas` (
-  `numeroNormativa` varchar(45) NOT NULL,
-  `descripcionNormativa` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`numeroNormativa`)
+CREATE TABLE `tb_normativas` (
+  `idNormativa` char(10) NOT NULL,
+  `nombreNormativa` varchar(45) DEFAULT NULL,
+  `idEstado` char(3) NOT NULL,
+  PRIMARY KEY (`idNormativa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `normativas`
+-- Dumping data for table `tb_normativas`
 --
 
-LOCK TABLES `normativas` WRITE;
-/*!40000 ALTER TABLE `normativas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `normativas` ENABLE KEYS */;
+LOCK TABLES `tb_normativas` WRITE;
+/*!40000 ALTER TABLE `tb_normativas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_normativas` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `precioxexamenclinico`
+-- Table structure for table `tb_caracteristica`
 --
 
-DROP TABLE IF EXISTS `precioxexamenclinico`;
+DROP TABLE IF EXISTS `tb_caracteristica`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_caracteristica` (
+  `idCaracteristica` char(10) NOT NULL,
+  `descripcionCaracteristica` varchar(100) DEFAULT NULL,
+  `idEstado` char(3) NOT NULL,
+  PRIMARY KEY (`idCaracteristica`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_caracteristica`
+--
+
+LOCK TABLES `tb_caracteristica` WRITE;
+/*!40000 ALTER TABLE `tb_caracteristica` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_caracteristica` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_moneda`
+--
+
+DROP TABLE IF EXISTS `tb_moneda`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_moneda` (
+  `idMoneda` char(3) NOT NULL,
+  `nombreMoneda` varchar(100) DEFAULT NULL,
+  `idEstado` char(3) NOT NULL,
+  PRIMARY KEY (`idMoneda`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_moneda`
+--
+
+LOCK TABLES `tb_moneda` WRITE;
+/*!40000 ALTER TABLE `tb_moneda` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_moneda` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+- Table structure for table `tb_examenclinico`
+--
+
+DROP TABLE IF EXISTS `tb_examenclinico`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_examenclinico` (
+  `idExamenClinico` char(10) NOT NULL,
+  `NombreExamenClinico` varchar(45) DEFAULT NULL,
+  `descripcionExamenClinico` varchar(100) DEFAULT NULL,
+  `idEspecialidad` char(10) NOT NULL,
+  `idNormativa` char(10) NOT NULL,
+  `idEstandar` char(10) NOT NULL,
+  `DiasCultivo` int NOT NULL,
+  `idEstado` char(3) NOT NULL,
+  PRIMARY KEY (`idExamenClinico`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_examenclinico`
+--
+
+LOCK TABLES `tb_examenclinico` WRITE;
+/*!40000 ALTER TABLE `tb_examenclinico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_examenclinico` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_precioxexamenclinico`
+--
+
+DROP TABLE IF EXISTS `tb_precioxexamenclinico`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `precioxexamenclinico` (
-  `idPrecioXExamenClinico` varchar(45) NOT NULL,
-  `moneda` varchar(45) DEFAULT NULL,
+  `idExamenClinico` char(10) NOT NULL,
   `fechaInicial` date DEFAULT NULL,
   `fechaFinal` date DEFAULT NULL,
+  `idMoneda` char(3) DEFAULT NULL,
   `precio` double DEFAULT NULL,
   `descuento` double DEFAULT NULL,
-  PRIMARY KEY (`idPrecioXExamenClinico`)
+  `indVigente` char(1) DEFAULT NULL,
+  PRIMARY KEY (`idExamenClinico`, `fechaInicial`, `fechaFinal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `precioxexamenclinico`
+-- Dumping data for table `tb_precioxexamenclinico`
 --
 
-LOCK TABLES `precioxexamenclinico` WRITE;
-/*!40000 ALTER TABLE `precioxexamenclinico` DISABLE KEYS */;
-/*!40000 ALTER TABLE `precioxexamenclinico` ENABLE KEYS */;
+LOCK TABLES `tb_precioxexamenclinico` WRITE;
+/*!40000 ALTER TABLE `tb_precioxexamenclinico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_precioxexamenclinico` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `tb_atributosxexamenclinico`
+--
+
+DROP TABLE IF EXISTS `tb_atributosxexamenclinico`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_atributosxexamenclinico` (
+  `idExamenClinico` char(10) NOT NULL,	
+  `idAtributo` char(10) NOT NULL,
+  `ObservacionesAtributo` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idExamenClinico`, `idAtributo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_atributosxexamenclinico`
+--
+
+LOCK TABLES `tb_atributosxexamenclinico` WRITE;
+/*!40000 ALTER TABLE `tb_atributosxexamenclinico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_atributosxexamenclinico` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_solicitudexamenclinico`
+--
+
+DROP TABLE IF EXISTS `tb_solicitudexamenclinico`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_solicitudexamenclinico` (
+  `idSolicitudexamen` char(15) NOT NULL,	
+  `fechaSolicitudexamen` date DEFAULT NULL,
+  `nroOrdenMedica` varchar(45) NOT NULL,	
+  `TipoOrdenMedica` char(1) NOT NULL,
+  `Subtotal` double DEFAULT NULL,
+  `totalDscto` double DEFAULT NULL,
+  `totalIgv` double DEFAULT NULL,
+  `totalPrecio` double DEFAULT NULL,
+  `NombresClienteExterno` varchar(100) DEFAULT NULL,
+  `numeroColegiatura` varchar(45) NOT NULL,
+  `CantExamenes` int NOT NULL,	 
+  `idEstado` char(3) NOT NULL,
+   PRIMARY KEY (`idSolicitudexamen`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_solicitudexamenclinico`
+--
+
+LOCK TABLES `tb_solicitudexamenclinico` WRITE;
+/*!40000 ALTER TABLE `tb_solicitudexamenclinico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_solicitudexamenclinico ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_Detallesolicitudexamenclinico`
+--
+
+DROP TABLE IF EXISTS `tb_Detallesolicitudexamenclinico`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_Detallesolicitudexamenclinico` (
+  `idSolicitudexamen` char(15) NOT NULL,	
+  `item` int NOT NULL,
+  `tipoExamen` char(1) NOT NULL,
+  `idExamenClinico` char(10) NOT NULL,
+  `indMuestras` char(1) NOT NULL,
+   PRIMARY KEY (`idSolicitudexamen`, `item`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_Detallesolicitudexamenclinico`
+--
+
+LOCK TABLES `tb_Detallesolicitudexamenclinico` WRITE;
+/*!40000 ALTER TABLE `tb_Detallesolicitudexamenclinico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_Detallesolicitudexamenclinico` ENABLE KEYS */;
+UNLOCK TABLES;
+  
 --
 -- Table structure for table `tb_atencion_medica`
 --
